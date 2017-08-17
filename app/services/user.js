@@ -1,4 +1,4 @@
-const { smsUserSchema } = require('../Schema/sms-user.js');
+const { smsUserSchema } = require('../model/sms-user.js');
 const mongoose = require('mongoose')
 
 module.exports = function(connection) {
