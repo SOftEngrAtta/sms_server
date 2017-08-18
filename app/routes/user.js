@@ -2,6 +2,7 @@ const express = require("express"),
     router = express.Router(),
     util = require('../services/util');
 
+const validationReq = require('../shared/validation');
 
 
 module.exports = function(connection) {
@@ -9,22 +10,97 @@ module.exports = function(connection) {
     const userService = require('../services/user')(connection);
     // get all sms users
     router.get('/' , (req,res)=>{
-        console.log('get users');
+        
+        userService
+        .get()
+        .then(result=>{
+            res.json({
+                status : true ,
+                message : result
+            })
+        })
+        .catch(error=>{
+            res.json({
+                status : false ,
+                message : error
+            })
+        })
+
+
     })
     
     // create sms user
     router.post('/' , (req,res)=>{
-        console.log('hello world');
+        let data = req.body ;
+        let checkValidation = 
+        validationReq.validation(data , ['name' , 'class' , 'address' , 'parent_name' , 'cell_number'])
+        if(checkValidation.invalid){
+            res.json({
+                status : false ,
+                message : checkValidation.message
+            })
+        }
+
+        userService
+        .create(data)   
+        .then(result=>{
+            res.json({
+                status : true ,
+                message : result
+            })
+        })
+        .catch(error=>{
+            res.json({
+                status : false ,
+                message : error
+            })
+        })
     })
 
     // update sms user data 
-    router.patch('/' , (req,res)=>{
-        console.log('update users');
+    router.patch('/:id' , (req,res)=>{
+        
+        let userID =  req.params['id'];
+        let data = req.body ;
+
+        userService
+        .update(userId , data)
+        .then(result=>{
+            res.json({
+                status : true ,
+                message : result
+            })
+        })
+        .catch(error=>{
+            res.json({
+                status : false ,
+                message : error
+            })
+        })
+
     })
 
     //delete sms user
-    router.patch('/' , (req,res)=>{
-        console.log('delete users');
+    router.delete('/:id' , (req,res)=>{
+        
+        let userID = req.params['id'];
+
+        userService
+        .delete_u(userID)
+        .then(result=>{
+            res.json({
+                status : true ,
+                message : result
+            })
+        })
+        .catch(error=>{
+            res.json({
+                status : false ,
+                message : error
+            })
+        })
+
+
     })
 
     return router;

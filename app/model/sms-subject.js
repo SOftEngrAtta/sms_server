@@ -20,4 +20,4 @@ const subject = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model("sms_class", subject);
+module.exports = mongoose.model("subject", subject);

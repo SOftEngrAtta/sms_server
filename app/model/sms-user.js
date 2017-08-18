@@ -23,7 +23,6 @@ const sms_users = new mongoose.Schema({
   email : String ,
   cell_number : Number ,
   parent_name : String ,
-  parents_cell_number : Number ,
   home_address : String ,
   user_class : [{type : ObjectId , ref : 'sms_class'}],
   subject : [{type : ObjectId , ref : 'subject'}],  
