@@ -15,10 +15,8 @@ const sms_users = new mongoose.Schema({
   created_by: { type: ObjectId, ref: "admin" },
   update_at: { type: Date },
   updated_by: { type: ObjectId, ref: "admin" },
-
-  image: String,
-
   full_name: String,
+  image: String,  
   age : Number ,
   email : String ,
   cell_number : Number ,
